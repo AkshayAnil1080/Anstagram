@@ -14,7 +14,7 @@ height:100%;
     display:grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 100%;
-    min-height: 800px; /* responsive*/
+    min-height: 400px; /* responsive*/
 }
 #landing-left{
     display:flex;
