@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AuthenticatorComponent } from './tools/authenticator/authenticator.component';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
+import { Router } from '@angular/router';
+import { ThisReceiver } from '@angular/compiler';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,21 +15,24 @@ export class AppComponent {
   auth = new FirebaseTSAuth();
   // isLoggedIn = false; not useing calling direct auth.isSignedIn
 
-  constructor(private loginSheet: MatBottomSheet){
+  constructor(private loginSheet: MatBottomSheet,
+              private router : Router
+    ){
     this.auth.listenToSignInStateChanges(
       //user arg rep  firebase user obj from firebase auth - uses (to get some info abt user)
       user => {
         this.auth.checkSignInState( // takes in json obj with upto 5 prop
         {
           whenSignedIn : user => {
-            alert("Logged In");
+            // alert("Logged In");
             // this.loggedIn=true; using directly
           },
           whenSignedOut: user =>{
-            alert("Logged Out");
+            // alert("Logged Out");
           },
           whenSignedInAndEmailNotVerified: user =>{
-
+              //calling the navigate fun from router obj and go to email verification page
+              this.router.navigate(["emailVerification"]);
           },
           whenSignedInAndEmailVerified: user => {
 
@@ -37,7 +42,7 @@ export class AppComponent {
           }
         }
 
-        );
+        )
       }   
     );
 
