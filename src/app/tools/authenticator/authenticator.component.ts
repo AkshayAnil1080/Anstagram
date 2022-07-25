@@ -19,6 +19,33 @@ state =AuthenticatorComponentState.LOGIN; //3.
 
   ngOnInit(): void {
   }
+
+  //login fun
+  onLogin(
+    loginEMail: HTMLInputElement,
+    loginPassword: HTMLInputElement
+  ){
+    let email = loginEMail.value;
+    let password  =  loginPassword.value;
+
+    if(this.isNotEmpty(email) && this.isNotEmpty(password)){
+      this.firebasetsAuth.signInWith( // this fun takes on json obj with 5 prop, we just need 4
+      {
+        email: email,   //rhs email in from line 28
+        password: password,
+
+        onComplete:(uc) => {   //callback fun
+          alert("Logged In");
+        },
+        onFail: (err) => {
+          alert(err)
+        }
+      }
+      )
+    }
+
+  }
+
   // to create new user
   onRegisterClick(
     registerEmail: HTMLInputElement, //setting parameter type

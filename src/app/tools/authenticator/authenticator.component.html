@@ -5,9 +5,11 @@
 
         </mat-card-header>
         <div *ngIf="isLoginState()">
-            <input placeholder="Email"/>
-            <input placeholder="Password" type="password"/>
-            <button mat-flat-button color="warn"> Login</button>
+            <input #loginEmail placeholder="Email"/>
+            <input #loginPassword placeholder="Password" type="password"/>
+            <button 
+            (click)="onLogin(loginEmail, loginPassword)"
+            mat-flat-button color="warn"> Login</button>
         </div>
         <!-- creating acc -->
         <div *ngIf="isRegisterState()"> 
