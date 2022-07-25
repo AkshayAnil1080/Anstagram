@@ -27,8 +27,10 @@
         </div>
         <!-- resetting password -->
         <div *ngIf="isForgotPasswordState()">
-            <input placeholder="Email">
-            <button mat-flat-button color="warn">Reset</button>
+            <input #resetEmail placeholder="Email">
+            <button
+            (click)="onResetClick(resetEmail)"
+            mat-flat-button color="warn">Reset</button>
         </div>
         <!-- footer -->
         <mat-card-actions align="end">

@@ -43,7 +43,21 @@ state =AuthenticatorComponentState.LOGIN; //3.
       }
       )
     }
-
+  }
+  //*************** */
+// reset password
+  onResetClick(resetEmail: HTMLInputElement){
+    let email = resetEmail.value;
+    if(this.isNotEmpty(email)){
+      this.firebasetsAuth.sendPasswordResetEmail(
+        {
+          email: email,
+          onComplete: (err) =>{
+            alert(`Reset email sent to ${email}`);
+          }
+        }
+      );
+    }
   }
 
   // to create new user
