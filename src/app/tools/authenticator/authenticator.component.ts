@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { raceWith } from 'rxjs';
+import { FirebaseTSAuth}  from 'firebasets/firebasetsAuth/firebaseTSAuth';
 
 @Component({
   selector: 'app-authenticator',
@@ -8,9 +9,66 @@ import { raceWith } from 'rxjs';
 })
 export class AuthenticatorComponent implements OnInit {
 state =AuthenticatorComponentState.LOGIN; //3.
-  constructor() { }
+
+ // FirebaseTsAuth contains fun to manage auth part of firebase
+ firebasetsAuth : FirebaseTSAuth;
+  constructor() { 
+
+    this.firebasetsAuth = new FirebaseTSAuth();
+  }
 
   ngOnInit(): void {
+  }
+  // to create new user
+  onRegisterClick(
+    registerEmail: HTMLInputElement, //setting parameter type
+    registerPassword: HTMLInputElement,
+    registerConfirmPassword: HTMLInputElement
+  ){
+    //inside fun getting value of each i/p
+    let email = registerEmail.value;
+    let password = registerPassword.value;
+    let confirmpassword = registerConfirmPassword.value;
+   
+
+    if(
+      this.isNotEmpty(email) &&
+      this.isNotEmpty(password) &&
+      this.isNotEmpty(confirmpassword) &&
+      this.isAMatch(password, confirmpassword)
+    ){
+  
+
+    
+       //to create acc grab fireabasetsAUth obj and call the create accWith
+      this.firebasetsAuth.createAccountWith( // takes on json ob with 4 prop
+      {
+        email: email,   // credential for creation
+        password: password,
+        //next two are callback fun on complete and onFail
+        onComplete: (uc) => {
+          alert("Account Created");
+          registerEmail.value="";
+          registerPassword.value="";
+          registerConfirmPassword.value="";
+        },
+        onFail: (err) => {
+          alert("failed to create the account");
+        }
+      }
+      );
+
+    }
+}
+  // check if value is empty
+  isNotEmpty(text : string) //paremter text with type string
+  {
+    return text!=null && text.length>0;
+  }
+
+  //if two string are equal
+  isAMatch(text : string, comparewith : string){  //two parameters with both type string
+    return text == comparewith;
   }
  //4. 17-26
 
