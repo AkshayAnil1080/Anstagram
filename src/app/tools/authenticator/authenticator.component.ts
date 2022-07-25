@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { raceWith } from 'rxjs';
 import { FirebaseTSAuth}  from 'firebasets/firebasetsAuth/firebaseTSAuth';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-authenticator',
@@ -12,7 +13,7 @@ state =AuthenticatorComponentState.LOGIN; //3.
 
  // FirebaseTsAuth contains fun to manage auth part of firebase
  firebasetsAuth : FirebaseTSAuth;
-  constructor() { 
+  constructor(private bottomSheetRef: MatBottomSheet) { //
 
     this.firebasetsAuth = new FirebaseTSAuth();
   }
@@ -35,7 +36,8 @@ state =AuthenticatorComponentState.LOGIN; //3.
         password: password,
 
         onComplete:(uc) => {   //callback fun
-          alert("Logged In");
+          // alert("Logged In");
+          this.bottomSheetRef.dismiss();
         },
         onFail: (err) => {
           alert(err)
@@ -53,7 +55,8 @@ state =AuthenticatorComponentState.LOGIN; //3.
         {
           email: email,
           onComplete: (err) =>{
-            alert(`Reset email sent to ${email}`);
+            // alert(`Reset email sent to ${email}`);
+            this.bottomSheetRef.dismiss();
           }
         }
       );
@@ -88,10 +91,11 @@ state =AuthenticatorComponentState.LOGIN; //3.
         password: password,
         //next two are callback fun on complete and onFail
         onComplete: (uc) => {
-          alert("Account Created");
-          registerEmail.value="";
-          registerPassword.value="";
-          registerConfirmPassword.value="";
+          // alert("Account Created");
+          // registerEmail.value="";
+          // registerPassword.value="";
+          // registerConfirmPassword.value="";
+          this.bottomSheetRef.dismiss();
         },
         onFail: (err) => {
           alert("failed to create the account");
