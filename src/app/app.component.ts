@@ -4,6 +4,7 @@ import { AuthenticatorComponent } from './tools/authenticator/authenticator.comp
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { Router } from '@angular/router';
 import { ThisReceiver } from '@angular/compiler';
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,6 +15,8 @@ export class AppComponent {
   //create obj of FirebaseTSAuth
   auth = new FirebaseTSAuth();
   // isLoggedIn = false; not useing calling direct auth.isSignedIn
+
+  firestore = new FirebaseTSFirestore();
 
   constructor(private loginSheet: MatBottomSheet,
               private router : Router
@@ -48,6 +51,12 @@ export class AppComponent {
 
   }
 
+  getUserProfile(){
+    this.firestore.listenToDocument(){
+
+      
+    }
+  }
   loggedIn(){
     // return this.loggedIn; or just use inbuilt fun
     return this.auth.isSignedIn();

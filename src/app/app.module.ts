@@ -15,13 +15,15 @@ import {MatCardModule} from '@angular/material/card';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthenticatorComponent } from './tools/authenticator/authenticator.component';
 import { EmailVerificationComponent } from './pages/email-verification/email-verification.component';
+import { ProfileComponent } from './tools/profile/profile.component';
 @NgModule({
   
   declarations: [
     AppComponent,
     HomeComponent,
     AuthenticatorComponent,
-    EmailVerificationComponent
+    EmailVerificationComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
