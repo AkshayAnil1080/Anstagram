@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CreatePostComponent } from 'src/app/tools/create-post/create-post.component';
 
 @Component({
   selector: 'app-post-feed',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostFeedComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  onCreateClick(){
+    this.dialog.open(CreatePostComponent);
+
+  }
 }
