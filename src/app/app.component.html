@@ -7,9 +7,14 @@
       <div *ngIf="!loggedIn()" (click)="onLoginClick()"
       class="nav-bar-items">Login</div>
 
+      <div  *ngIf="loggedIn() && userHasProfile"  class="nav-bar-items">
+        Hello, {{userDocument.publicName}}
+        </div>
+
       <div  *ngIf="loggedIn()" (click)="onLogoutClick()"
       class="nav-bar-items">Logout</div>
 
+    
     </div>
   </div>
 
@@ -17,4 +22,5 @@
 
 <router-outlet></router-outlet>
 
-<app-profile [show]="loggedIn()"></app-profile>
+<app-profile [show]="loggedIn() && !userHasProfile "></app-profile>
+<!-- want to show the component only when logged in and not have the profile -->

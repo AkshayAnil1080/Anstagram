@@ -15,8 +15,9 @@ export class AppComponent {
   //create obj of FirebaseTSAuth
   auth = new FirebaseTSAuth();
   // isLoggedIn = false; not useing calling direct auth.isSignedIn
-
   firestore = new FirebaseTSFirestore();
+  userHasProfile = true;
+  userDocument: any;
 
   constructor(private loginSheet: MatBottomSheet,
               private router : Router
@@ -38,7 +39,7 @@ export class AppComponent {
               this.router.navigate(["emailVerification"]);
           },
           whenSignedInAndEmailVerified: user => {
-
+            this.getUserProfile();
           },
           whenChanged: user => {
 
@@ -52,10 +53,21 @@ export class AppComponent {
   }
 
   getUserProfile(){
-    this.firestore.listenToDocument(){
+    this.firestore.listenToDocument(
+      {
+        name: "Getting Document", // need this to stop the fun anytime
+        path: ["Users", this.auth?.getAuth()?.currentUser?.uid || '{}'],
+        // paht of doc we want to ret(for now its uesr dos from users in FB DB)
+        onUpdate: (result) =>{  // result obj rep the returned data from DB
 
+        this.userDocument = <UserDocument> result.data(); // access the data(result obj data method) and pass into var
+        // access above properties
+        
+        this.userHasProfile = result.exists;
+        }
       
     }
+    );
   }
   loggedIn(){
     // return this.loggedIn; or just use inbuilt fun
@@ -68,4 +80,11 @@ export class AppComponent {
   onLogoutClick(){
     this.auth.signOut();
   }
+
 }
+
+export interface UserDocument{
+    publicName: string;    description: string;
+}
+
+
