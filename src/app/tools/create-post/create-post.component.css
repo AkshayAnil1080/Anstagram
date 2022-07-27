@@ -1,0 +1,15 @@
+#photo-upload{
+  display: none;   
+}
+
+textarea{
+    font-size: 1.5em;
+    padding: 1em;
+    resize: none; /* so it cannot be resized*/
+    width: 250px;
+    min-height: 200px;
+    /* remove border and outline */
+    border: none;
+    outline: none;
+
+}

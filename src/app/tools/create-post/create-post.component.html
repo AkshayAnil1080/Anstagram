@@ -1,1 +1,21 @@
-<p>create-post works!</p>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title> CreatePost </mat-card-title>
+
+    </mat-card-header>
+    <div>
+        <textarea placeholder="Type Message..."></textarea>
+    </div>
+
+    <mat-card-actions align="end">
+        <button mat-button color="warn">
+            <label for="photo-upload"> <!--allows u place default file input ele with icon-->
+                <input id="photo-upload" type="file" accept="image/*"/>
+                <mat-icon>insert_photo</mat-icon>
+            </label>
+        </button>
+
+        <button mat-flat-button color="warn">Post</button>
+    </mat-card-actions>
+
+</mat-card>
