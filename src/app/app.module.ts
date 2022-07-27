@@ -19,6 +19,7 @@ import { ProfileComponent } from './tools/profile/profile.component';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { PostFeedComponent } from './pages/post-feed/post-feed.component';
 
 @NgModule({
   
@@ -27,7 +28,8 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     AuthenticatorComponent,
     EmailVerificationComponent,
-    ProfileComponent
+    ProfileComponent,
+    PostFeedComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,9 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     MatButtonModule,
     MatBottomSheetModule,
-    MatCardModule
+    MatCardModule,
+    MatDialogModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
