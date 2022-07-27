@@ -16,6 +16,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { AuthenticatorComponent } from './tools/authenticator/authenticator.component';
 import { EmailVerificationComponent } from './pages/email-verification/email-verification.component';
 import { ProfileComponent } from './tools/profile/profile.component';
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   
   declarations: [

@@ -62,8 +62,13 @@ export class AppComponent {
 
         this.userDocument = <UserDocument> result.data(); // access the data(result obj data method) and pass into var
         // access above properties
-        
         this.userHasProfile = result.exists;
+
+        
+        if(this.userHasProfile){
+          this.router.navigate(["postfeed"]);
+      }
+
         }
       
     }
