@@ -3,3 +3,11 @@
     bottom: 2em;
     right: 2em;
 }
+
+#post-feed{
+    max-width: 500px;
+    margin-top: 5em;
+    /* senter the pose by auto */
+    margin-left: auto;
+    margin-right: auto;
+}
