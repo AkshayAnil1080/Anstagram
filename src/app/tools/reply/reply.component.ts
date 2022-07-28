@@ -19,6 +19,16 @@ export class ReplyComponent implements OnInit {
   ngOnInit(): void {
     this.getComments();
   }
+  
+  isCommentCreator(comment: Comment){ // to check the current commnet is created by this user or not
+    try{
+      return comment.creatorId == AppComponent.getUserDocument().userId;
+    }
+    catch(err){
+
+    }
+
+  }
 getComments(){
  this.firestore.listenToCollection( // want to retriive the comments continuosly when new comments come
     {

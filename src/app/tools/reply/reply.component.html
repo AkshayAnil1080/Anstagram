@@ -2,10 +2,12 @@
 <div id="reply-box">
     <!-- <div *ngFor="let comment of comments" [ngClass]="{{" -->
         <!-- to loop throught the comments array -->
-        <div *ngFor="let comment of comments ">
+        <div *ngFor="let comment of comments "
+         [ngClass]="{'comment-container': true, 'creator-comment-container': isCommentCreator(comment)}">
             <div>
                 <p>{{comment?.creatorName}}</p>
-                <p>{{comment?.comment}}</p>
+                <p [ngClass]="{'comment' : true, 'creator-comment': isCommentCreator(comment)}">
+                    {{comment?.comment}}</p>
             </div>
         </div>
 
