@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PostData } from 'src/app/pages/post-feed/post-feed.component';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
+import { MatDialog } from '@angular/material/dialog';
+import { ReplyComponent } from '../reply/reply.component';
 
 @Component({
   selector: 'app-post',
@@ -16,10 +18,14 @@ export class PostComponent implements OnInit {
   creatorDescription :string | undefined;
 
   firestore = new FirebaseTSFirestore();
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getCreatorInfo();
+  }
+
+  onReplyClick(){ // inmport mat dialog and inject in constructor
+    this.dialog.open(ReplyComponent);
   }
 
   getCreatorInfo(){  // to retreive the info of the user made the post
