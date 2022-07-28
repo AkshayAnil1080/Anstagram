@@ -17,7 +17,7 @@ export class AppComponent {
   // isLoggedIn = false; not useing calling direct auth.isSignedIn
   firestore = new FirebaseTSFirestore();
   userHasProfile = true;
-  userDocument: any;
+  private static userDocument: any; // static to access it anywhere
 
   constructor(private loginSheet: MatBottomSheet,
               private router : Router
@@ -33,6 +33,7 @@ export class AppComponent {
           },
           whenSignedOut: user =>{
             // alert("Logged Out");
+            AppComponent.userDocument =null  // to clear the value when users sign out
           },
           whenSignedInAndEmailNotVerified: user =>{
               //calling the navigate fun from router obj and go to email verification page
@@ -51,6 +52,19 @@ export class AppComponent {
     );
 
   }
+  public static getUserDocument(){
+    return AppComponent.userDocument;
+  }
+  // to fix {{}} in app.html
+  getUsername(){
+
+    try{
+      return AppComponent.userDocument.publicName;
+    }
+    catch(err){
+      
+    }
+  }
 
   getUserProfile(){
     this.firestore.listenToDocument(
@@ -60,11 +74,12 @@ export class AppComponent {
         // paht of doc we want to ret(for now its uesr dos from users in FB DB)
         onUpdate: (result) =>{  // result obj rep the returned data from DB
 
-        this.userDocument = <UserDocument> result.data(); // access the data(result obj data method) and pass into var
+        AppComponent.userDocument = <UserDocument> result.data(); // access the data(result obj data method) and pass into var
         // access above properties
         this.userHasProfile = result.exists;
 
-        
+        AppComponent.userDocument.userId = this.auth.getAuth().currentUser?.uid; // creating a public fun to allow other compo to acces it
+ 
         if(this.userHasProfile){
           this.router.navigate(["postfeed"]);
       }
@@ -90,6 +105,7 @@ export class AppComponent {
 
 export interface UserDocument{
     publicName: string;    description: string;
+    userId:string;
 }
 
 

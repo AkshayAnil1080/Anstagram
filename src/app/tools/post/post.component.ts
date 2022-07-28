@@ -25,7 +25,7 @@ export class PostComponent implements OnInit {
   }
 
   onReplyClick(){ // inmport mat dialog and inject in constructor
-    this.dialog.open(ReplyComponent);
+    this.dialog.open(ReplyComponent, {data: this.postData?.postId});
   }
 
   getCreatorInfo(){  // to retreive the info of the user made the post

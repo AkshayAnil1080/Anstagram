@@ -37,6 +37,8 @@ export class PostFeedComponent implements OnInit {
           doc => {
            let post= <PostData> doc.data();  //return data of post - assign to var and typecast
 
+           post.postId=doc.id;
+           
            this.posts.push(post); //push each post in array of post - cal getPosts method in Oninit
           }
           );
@@ -53,4 +55,6 @@ export interface PostData{
   comment : string;
   creatorId: string;
   imageUrl?: string; // since its an optional field, need to give ?
+  
+  postId : string; // set it to doc id in for loop in getPost()
 }
