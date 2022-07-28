@@ -25,6 +25,18 @@ export class CreatePostComponent implements OnInit {
     //1. get value of text area
     let comment = commentInput.value;
 
+    if(comment.length <=0) return;
+
+    if(this.selectedImageFile){ // if photo is selected call photo wala fun
+      this.uploadImagePost(comment);
+    } 
+    else{
+      this.uploadPost(comment);
+    }
+
+  }
+
+  uploadImagePost(comment :  string){
     let postId = this.firestore.genDocId();   // createing unique id for each post
     //2. upload file storgae, takes obj with 6 prop, we only need 4
     this.storage.upload(
@@ -36,30 +48,51 @@ export class CreatePostComponent implements OnInit {
          },
           // callback fun , when success ulpload and return url to download the file
         onComplete: (downloadUrl) =>{
-          // alert(downloadUrl);
           this.firestore.create(
-              {
-                path:["Posts", postId],
-                data:{
-                  comment: comment,
-                  creatorId : this.auth.getAuth().currentUser?.uid,
-                  imageUrl : downloadUrl,
-                  timestamp:  FirebaseTSApp.getFirestoreTimestamp() // will use server time
-                },
-                //lastly, onComplete callback fun
-                onComplete: (docId) => {
-                //want to close dialog, import MatDialogRef, inject it and pass this componenet
-                // grab dialog ref and call close()
-                this.dialog.close();
-
-                }
-
-              } 
-          );
+            {
+              path:["Posts"],
+              data:{
+                comment: comment,
+                creatorId : this.auth.getAuth().currentUser?.uid,
+               
+                timestamp:  FirebaseTSApp.getFirestoreTimestamp() // will use server time
+              },
+              //lastly, onComplete callback fun
+              onComplete: (docId) => {
+              //want to close dialog, import MatDialogRef, inject it and pass this componenet
+              // grab dialog ref and call close()
+              this.dialog.close();
+      
+              }
+      
+            } 
+        );
         }
       }
     );
+  }
 
+  uploadPost(comment : string){
+     // alert(downloadUrl);
+     this.firestore.create(
+      {
+        path:["Posts"],
+        data:{
+          comment: comment,
+          creatorId : this.auth.getAuth().currentUser?.uid,
+         
+          timestamp:  FirebaseTSApp.getFirestoreTimestamp() // will use server time
+        },
+        //lastly, onComplete callback fun
+        onComplete: (docId) => {
+        //want to close dialog, import MatDialogRef, inject it and pass this componenet
+        // grab dialog ref and call close()
+        this.dialog.close();
+
+        }
+
+      } 
+  );
   }
 
   onPhotoSelected(photoSelector: HTMLInputElement){
