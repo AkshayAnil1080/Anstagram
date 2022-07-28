@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseTSStorage} from 'firebasets/firebasetsStorage/firebaseTSStorage';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
-
+import { FirebaseTSApp } from 'firebasets/firebasetsApp/firebaseTSApp';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-post',
@@ -14,7 +15,8 @@ export class CreatePostComponent implements OnInit {
   auth=new FirebaseTSAuth();
   firestore = new FirebaseTSFirestore();
   storage = new FirebaseTSStorage();
-  constructor() { }
+
+  constructor(private dialog: MatDialogRef<CreatePostComponent>) { }
 
   ngOnInit(): void {
   }
@@ -34,7 +36,26 @@ export class CreatePostComponent implements OnInit {
          },
           // callback fun , when success ulpload and return url to download the file
         onComplete: (downloadUrl) =>{
-          alert(downloadUrl);
+          // alert(downloadUrl);
+          this.firestore.create(
+              {
+                path:["Posts", postId],
+                data:{
+                  comment: comment,
+                  creatorId : this.auth.getAuth().currentUser?.uid,
+                  imageUrl : downloadUrl,
+                  timestamp:  FirebaseTSApp.getFirestoreTimestamp() // will use server time
+                },
+                //lastly, onComplete callback fun
+                onComplete: (docId) => {
+                //want to close dialog, import MatDialogRef, inject it and pass this componenet
+                // grab dialog ref and call close()
+                this.dialog.close();
+
+                }
+
+              } 
+          );
         }
       }
     );
