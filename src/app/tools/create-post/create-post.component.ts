@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseTSStorage} from 'firebasets/firebasetsStorage/firebaseTSStorage';
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
+import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
+
 
 @Component({
   selector: 'app-create-post',
@@ -7,11 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatePostComponent implements OnInit {
   selectedImageFile : File | undefined;  // variable to select the current image
+  auth=new FirebaseTSAuth();
+  firestore = new FirebaseTSFirestore();
+  storage = new FirebaseTSStorage();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onPostClick(commentInput: HTMLTextAreaElement){
+    //1. get value of text area
+    let comment = commentInput.value;
+
+    let postId = this.firestore.genDocId();   // createing unique id for each post
+    //2. upload file storgae, takes obj with 6 prop, we only need 4
+    this.storage.upload(
+      {
+        uploadName: "upload Image Post", //keep track of how many upload r runnin in th app
+        path: ["Posts", postId , "image"],
+        data: {
+          data: this.selectedImageFile   //the file to upload
+         },
+          // callback fun , when success ulpload and return url to download the file
+        onComplete: (downloadUrl) =>{
+          alert(downloadUrl);
+        }
+      }
+    );
+
+  }
 
   onPhotoSelected(photoSelector: HTMLInputElement){
     // accessing the files property(ret an array of selceted images)
