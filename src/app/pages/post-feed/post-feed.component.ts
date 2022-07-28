@@ -18,4 +18,5 @@ export class PostFeedComponent implements OnInit {
     this.dialog.open(CreatePostComponent);
 
   }
+
 }
