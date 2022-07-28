@@ -1,7 +1,13 @@
 <p>Reply</p>
 <div id="reply-box">
     <!-- <div *ngFor="let comment of comments" [ngClass]="{{" -->
-
+        <!-- to loop throught the comments array -->
+        <div *ngFor="let comment of comments ">
+            <div>
+                <p>{{comment?.creatorName}}</p>
+                <p>{{comment?.comment}}</p>
+            </div>
+        </div>
 
 </div>
 <div id="reply-action-bar">
